@@ -3,10 +3,11 @@ import os
 TASK_FILE = "tasks.txt"
 
 def load_tasks():
-    if not os.path.exists(TASK_FILE):
+    try:
+        with open(TASK_FILE, "r") as file:
+            return [line.rstrip('\n') for line in file if line.strip()]
+    except FileNotFoundError:
         return []
-    with open(TASK_FILE, "r") as file:
-        return [line.strip() for line in file.readlines()]
 
 def save_tasks(tasks):
     with open(TASK_FILE, "w") as file:
